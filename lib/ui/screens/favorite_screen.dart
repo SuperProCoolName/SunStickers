@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../data/_data.dart';
+import '../../states/_states.dart';
 import '../../ui_kit/_ui_kit.dart';
 import '../_ui.dart';
 
@@ -12,7 +13,7 @@ class FavoriteScreen extends StatefulWidget {
 }
 
 class FavoriteScreenState extends State<FavoriteScreen> {
-  var favoriteItems = AppData.favoriteItems;
+  List<Sticker> get favoriteItems => StickerState().favorite;
 
   @override
   Widget build(BuildContext context) {
