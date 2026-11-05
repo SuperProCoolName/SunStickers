@@ -56,7 +56,7 @@ class StickerListView extends StatelessWidget {
               width: 50,
             );
           },
-          itemCount: 20),
+          itemCount: stickers.length),
     );
   }
 }

@@ -29,5 +29,10 @@ class StickerState {
         e.isSelected = false;
       }
     }).toList();
+    if (category.type == StickerType.all) {
+      stickersByCategory = stickers;
+    } else {
+      stickersByCategory = stickers.where((e) => e.type == category.type).toList();
+    }
   }
 }
