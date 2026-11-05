@@ -21,6 +21,16 @@ class CartScreenState extends State<CartScreen> {
     setState(() {});
   }
 
+  void onIncreaseQuantityTap(Sticker sticker) async {
+    await StickerState().onIncreaseQuantityTap(sticker);
+    setState(() {});
+  }
+
+  void onDecreaseQuantityTap(Sticker sticker) async {
+    await StickerState().onDecreaseQuantityTap(sticker);
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -103,12 +113,8 @@ class CartScreenState extends State<CartScreen> {
                 Column(
                   children: [
                     CounterButton(
-                      onIncrementTap: () {
-                        print('Увеличить количество');
-                      },
-                      onDecrementTap: () {
-                        print('Уменьшить количество');
-                      },
+                      onIncrementTap: () => onIncreaseQuantityTap(sticker),
+                      onDecrementTap: () => onDecreaseQuantityTap(sticker),
                       size: const Size(24, 24),
                       padding: 0,
                       label: Text(
