@@ -33,6 +33,11 @@ class StickerDetailState extends State<StickerDetail> {
     StickerState().onAddToCartTap(sticker);
   }
 
+  void onAddRemoveFavoriteTap() async {
+    await StickerState().onAddRemoveFavoriteTap(sticker);
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,7 +67,7 @@ class StickerDetailState extends State<StickerDetail> {
     return FloatingActionButton(
       elevation: 0.0,
       backgroundColor: AppColor.accent,
-      onPressed: () {},
+      onPressed: onAddRemoveFavoriteTap,
       child: sticker.isFavorite ? const Icon(AppIcon.heart) : const Icon(AppIcon.outlinedHeart),
     );
   }

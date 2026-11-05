@@ -62,6 +62,11 @@ class StickerState {
     }
   }
 
+  Future<void> onAddRemoveFavoriteTap(Sticker sticker) async {
+    sticker.isFavorite = !sticker.isFavorite;
+    favoriteKey.currentState?.update();
+  }
+
   //Вспомогательные методы
   String stickerPrice(Sticker sticker) {
     return (sticker.quantity * sticker.price).toString();

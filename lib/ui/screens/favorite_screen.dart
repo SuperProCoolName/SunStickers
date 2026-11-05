@@ -15,6 +15,10 @@ class FavoriteScreen extends StatefulWidget {
 class FavoriteScreenState extends State<FavoriteScreen> {
   List<Sticker> get favoriteItems => StickerState().favorite;
 
+  void update() {
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

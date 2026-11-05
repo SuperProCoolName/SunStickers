@@ -15,7 +15,7 @@ class HomeScreenState extends State<HomeScreen> {
   final List<Widget> screens = [
     const StickerList(),
     CartScreen(key: StickerState().cartKey),
-    const FavoriteScreen(),
+    FavoriteScreen(key: StickerState().favoriteKey),
     const ProfileScreen(),
   ];
   int currentIndex = 0;
