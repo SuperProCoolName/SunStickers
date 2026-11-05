@@ -35,4 +35,13 @@ class StickerState {
       stickersByCategory = stickers.where((e) => e.type == category.type).toList();
     }
   }
+
+  Future<void> onIncreaseQuantityTap(Sticker sticker) async {
+    sticker.quantity++;
+  }
+
+  Future<void> onDecreaseQuantityTap(Sticker sticker) async {
+    if (sticker.quantity == 1) return;
+    sticker.quantity--;
+  }
 }
