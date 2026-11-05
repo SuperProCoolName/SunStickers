@@ -16,6 +16,10 @@ class CartScreen extends StatefulWidget {
 class CartScreenState extends State<CartScreen> {
   List<Sticker> get cartItems => StickerState().cart;
 
+  void update() {
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

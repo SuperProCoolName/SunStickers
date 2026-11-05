@@ -44,4 +44,9 @@ class StickerState {
     if (sticker.quantity == 1) return;
     sticker.quantity--;
   }
+
+  Future<void> onAddToCartTap(Sticker sticker) async {
+    sticker.cart = true;
+    cartKey.currentState?.update();
+  }
 }

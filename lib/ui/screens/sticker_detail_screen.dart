@@ -29,6 +29,10 @@ class StickerDetailState extends State<StickerDetail> {
     setState(() {});
   }
 
+  void onAddToCartTap() {
+    StickerState().onAddToCartTap(sticker);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -146,7 +150,7 @@ class StickerDetailState extends State<StickerDetail> {
                             child: Padding(
                               padding: const EdgeInsets.symmetric(horizontal: 30),
                               child: ElevatedButton(
-                                onPressed: () {},
+                                onPressed: onAddToCartTap,
                                 child: const Text("Add to cart"),
                               ),
                             ),
