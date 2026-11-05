@@ -55,6 +55,13 @@ class StickerState {
     sticker.quantity = 1;
   }
 
+  Future<void> onCheckOutTap() async {
+    for (var element in cart) {
+      element.cart = false;
+      element.quantity = 1;
+    }
+  }
+
   //Вспомогательные методы
   String stickerPrice(Sticker sticker) {
     return (sticker.quantity * sticker.price).toString();
