@@ -19,4 +19,15 @@ class StickerState {
   List<Sticker> get cart => stickers.where((element) => element.cart).toList();
   List<Sticker> get favorite => stickers.where((element) => element.isFavorite).toList();
   ValueNotifier<bool> isLight = ValueNotifier(true);
+
+  //Действия
+  Future<void> onCategoryTap(StickerCategory category) async {
+    categories.map((e) {
+      if (e.type == category.type) {
+        e.isSelected = true;
+      } else {
+        e.isSelected = false;
+      }
+    }).toList();
+  }
 }
