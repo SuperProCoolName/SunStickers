@@ -79,7 +79,7 @@ class StickerListState extends State<StickerList> {
     return AppBar(
       leading: IconButton(
         icon: const FaIcon(FontAwesomeIcons.dice),
-        onPressed: () {},
+        onPressed: StickerState().toggleTheme,
       ),
       title: Row(
         mainAxisAlignment: MainAxisAlignment.center,

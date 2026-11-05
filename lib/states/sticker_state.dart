@@ -67,6 +67,10 @@ class StickerState {
     favoriteKey.currentState?.update();
   }
 
+  void toggleTheme() {
+    isLight.value = !isLight.value;
+  }
+
   //Вспомогательные методы
   String stickerPrice(Sticker sticker) {
     return (sticker.quantity * sticker.price).toString();
