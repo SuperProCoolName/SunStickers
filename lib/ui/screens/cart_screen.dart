@@ -31,6 +31,11 @@ class CartScreenState extends State<CartScreen> {
     setState(() {});
   }
 
+  void onRemoveFromCartTap(Sticker sticker) async {
+    await StickerState().onRemoveFromCartTap(sticker);
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,7 +68,7 @@ class CartScreenState extends State<CartScreen> {
           direction: DismissDirection.endToStart,
           onDismissed: (direction) {
             if (direction == DismissDirection.endToStart) {
-              print('Удаляем');
+              onRemoveFromCartTap(sticker);
             }
           },
           key: UniqueKey(),

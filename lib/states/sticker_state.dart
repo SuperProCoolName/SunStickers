@@ -50,6 +50,11 @@ class StickerState {
     cartKey.currentState?.update();
   }
 
+  Future<void> onRemoveFromCartTap(Sticker sticker) async {
+    sticker.cart = false;
+    sticker.quantity = 1;
+  }
+
   //Вспомогательные методы
   String stickerPrice(Sticker sticker) {
     return (sticker.quantity * sticker.price).toString();
