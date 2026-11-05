@@ -15,6 +15,7 @@ class CartScreen extends StatefulWidget {
 
 class CartScreenState extends State<CartScreen> {
   List<Sticker> get cartItems => StickerState().cart;
+  double taxes = 5.0;
 
   void update() {
     setState(() {});
@@ -158,7 +159,7 @@ class CartScreenState extends State<CartScreen> {
                                 style: Theme.of(context).textTheme.headlineSmall,
                               ),
                               Text(
-                                "\$111",
+                                "\$${StickerState().subtotal.toString()}",
                                 style: Theme.of(context).textTheme.displayMedium,
                               ),
                             ],
@@ -175,7 +176,7 @@ class CartScreenState extends State<CartScreen> {
                                 style: Theme.of(context).textTheme.headlineSmall,
                               ),
                               Text(
-                                "\$${5.00}",
+                                "\$${taxes.toString()}",
                                 style: Theme.of(context).textTheme.displayMedium,
                               ),
                             ],
@@ -195,7 +196,7 @@ class CartScreenState extends State<CartScreen> {
                                 style: Theme.of(context).textTheme.displayMedium,
                               ),
                               Text(
-                                "\$120.0",
+                                "\$${(StickerState().subtotal + taxes).toString()}",
                                 style: AppTextStyle.h2Style.copyWith(
                                   color: AppColor.accent,
                                 ),

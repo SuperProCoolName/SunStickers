@@ -54,4 +54,12 @@ class StickerState {
   String stickerPrice(Sticker sticker) {
     return (sticker.quantity * sticker.price).toString();
   }
+
+  double get subtotal {
+    double amount = 0.0;
+    for (var element in cart) {
+      amount = amount + element.price * element.quantity;
+    }
+    return amount;
+  }
 }
