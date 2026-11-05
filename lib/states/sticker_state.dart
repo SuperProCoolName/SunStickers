@@ -49,4 +49,9 @@ class StickerState {
     sticker.cart = true;
     cartKey.currentState?.update();
   }
+
+  //Вспомогательные методы
+  String stickerPrice(Sticker sticker) {
+    return (sticker.quantity * sticker.price).toString();
+  }
 }

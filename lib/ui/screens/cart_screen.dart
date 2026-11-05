@@ -116,7 +116,7 @@ class CartScreenState extends State<CartScreen> {
                       ),
                     ),
                     Text(
-                      "\$10",
+                      "\$${StickerState().stickerPrice(sticker)}",
                       style: AppTextStyle.h2Style.copyWith(color: AppColor.accent),
                     )
                   ],
