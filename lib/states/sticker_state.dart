@@ -69,6 +69,7 @@ class StickerState extends GetxController {
 
   void toggleTheme() {
     light = !light;
+    update();
   }
 
   //Вспомогательные  методы

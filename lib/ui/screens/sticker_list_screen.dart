@@ -69,7 +69,7 @@ class StickerList extends GetView<StickerState> {
     return AppBar(
       leading: IconButton(
         icon: const FaIcon(FontAwesomeIcons.dice),
-        onPressed: () {},
+        onPressed: controller.toggleTheme,
       ),
       title: Row(
         mainAxisAlignment: MainAxisAlignment.center,
