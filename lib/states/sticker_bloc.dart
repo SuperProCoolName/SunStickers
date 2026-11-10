@@ -12,6 +12,7 @@ class StickerBloc extends Bloc<StickerEvent, StickerState> {
     on<CartItemRemoved>(_onCartItemRemoved);
     on<CartCheckedOut>(_onCartCheckedOut);
     on<FavoriteToggled>(_onFavoriteToggled);
+    on<ThemeToggled>(_onThemeToggled);
   }
 
   void _onCategorySelected(CategorySelected event, Emitter<StickerState> emit) {
@@ -80,5 +81,9 @@ class StickerBloc extends Bloc<StickerEvent, StickerState> {
       return e;
     }).toList();
     emit(state.copyWith(stickers: stickers));
+  }
+
+  void _onThemeToggled(ThemeToggled event, Emitter<StickerState> emit) {
+    emit(state.copyWith(light: !state.light));
   }
 }
