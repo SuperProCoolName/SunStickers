@@ -11,6 +11,7 @@ class StickerBloc extends Bloc<StickerEvent, StickerState> {
     on<CartItemAdded>(_onCartItemAdded);
     on<CartItemRemoved>(_onCartItemRemoved);
     on<CartCheckedOut>(_onCartCheckedOut);
+    on<FavoriteToggled>(_onFavoriteToggled);
   }
 
   void _onCategorySelected(CategorySelected event, Emitter<StickerState> emit) {
@@ -65,6 +66,16 @@ class StickerBloc extends Bloc<StickerEvent, StickerState> {
     final stickers = state.stickers.map((e) {
       if (cartIds.contains(e.id)) {
         return e.copyWith(cart: false, quantity: 1);
+      }
+      return e;
+    }).toList();
+    emit(state.copyWith(stickers: stickers));
+  }
+
+  void _onFavoriteToggled(FavoriteToggled event, Emitter<StickerState> emit) {
+    final stickers = state.stickers.map((e) {
+      if (e.id == event.stickerId) {
+        return e.copyWith(favorite: !e.favorite);
       }
       return e;
     }).toList();

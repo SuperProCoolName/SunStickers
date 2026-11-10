@@ -33,3 +33,9 @@ class CartItemRemoved extends StickerEvent {
 }
 
 class CartCheckedOut extends StickerEvent {}
+
+class FavoriteToggled extends StickerEvent {
+  FavoriteToggled(this.stickerId);
+
+  final int stickerId;
+}
