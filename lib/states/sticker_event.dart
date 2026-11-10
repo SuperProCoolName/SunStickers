@@ -7,3 +7,29 @@ class CategorySelected extends StickerEvent {
 
   final StickerCategory category;
 }
+
+class QuantityIncreased extends StickerEvent {
+  QuantityIncreased(this.stickerId);
+
+  final int stickerId;
+}
+
+class QuantityDecreased extends StickerEvent {
+  QuantityDecreased(this.stickerId);
+
+  final int stickerId;
+}
+
+class CartItemAdded extends StickerEvent {
+  CartItemAdded(this.stickerId);
+
+  final int stickerId;
+}
+
+class CartItemRemoved extends StickerEvent {
+  CartItemRemoved(this.stickerId);
+
+  final int stickerId;
+}
+
+class CartCheckedOut extends StickerEvent {}
