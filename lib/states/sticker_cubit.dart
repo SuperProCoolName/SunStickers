@@ -73,4 +73,8 @@ class StickerCubit extends Cubit<StickerState> {
     }).toList();
     emit(state.copyWith(stickers: stickers));
   }
+
+  void toggleTheme() {
+    emit(state.copyWith(light: !state.light));
+  }
 }
