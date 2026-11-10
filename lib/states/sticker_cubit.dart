@@ -63,4 +63,14 @@ class StickerCubit extends Cubit<StickerState> {
     }).toList();
     emit(state.copyWith(stickers: stickers));
   }
+
+  void onAddRemoveFavoriteTap(int stickerId) {
+    final stickers = state.stickers.map((e) {
+      if (e.id == stickerId) {
+        return e.copyWith(favorite: !e.favorite);
+      }
+      return e;
+    }).toList();
+    emit(state.copyWith(stickers: stickers));
+  }
 }
