@@ -1,12 +1,7 @@
-import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../data/_data.dart';
-import '../ui/_ui.dart';
-
-class StickerState {
-  StickerState._();
-  static final _instance = StickerState._();
-  factory StickerState() => _instance;
+class StickerState extends GetxController {
 
   //Переменные
   List<StickerCategory> categories = AppData.categories;
@@ -30,6 +25,7 @@ class StickerState {
     } else {
       stickersByCategory = stickers.where((e) => e.type == category.type).toList();
     }
+    update();
   }
 
   Future<void> onIncreaseQuantityTap(Sticker sticker) async {
