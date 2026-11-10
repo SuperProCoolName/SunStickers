@@ -1,8 +1,15 @@
+import 'package:mobx/mobx.dart';
+
 import '_models.dart';
 
-class StickerCategory {
+part 'sticker_category.g.dart';
+
+class StickerCategory = _StickerCategory with _$StickerCategory;
+
+abstract class _StickerCategory with Store {
   final StickerType type;
+  @observable
   bool isSelected;
 
-  StickerCategory({required this.type, required this.isSelected});
+  _StickerCategory({required this.type, required this.isSelected});
 }

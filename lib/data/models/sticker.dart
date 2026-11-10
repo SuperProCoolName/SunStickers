@@ -1,19 +1,28 @@
+import 'package:mobx/mobx.dart';
+
+part 'sticker.g.dart';
+
 enum StickerType { all, toy, fauna, plant, berry, fruit, other }
 
-class Sticker {
+class Sticker = _Sticker with _$Sticker;
+
+abstract class _Sticker with Store {
   int id;
   String image;
   String name;
   double price;
+  @observable
   int quantity;
+  @observable
   bool favorite;
   String description;
   double score;
   StickerType type;
   int voter;
+  @observable
   bool cart;
 
-  Sticker({
+  _Sticker({
     required this.id,
     required this.image,
     required this.name,
