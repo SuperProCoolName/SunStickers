@@ -30,22 +30,26 @@ class StickerState extends GetxController {
 
   Future<void> onIncreaseQuantityTap(Sticker sticker) async {
     sticker.quantity++;
+    update();
   }
 
   Future<void> onDecreaseQuantityTap(Sticker sticker) async {
     if (sticker.quantity == 1) return;
     sticker.quantity--;
+    update();
   }
 
   Future<void> onAddToCartTap(Sticker sticker) async {
     sticker.cart = true;
     cart = stickers.where((e) => e.cart).toList();
+    update();
   }
 
   Future<void> onRemoveFromCartTap(Sticker sticker) async {
     sticker.cart = false;
     sticker.quantity = 1;
     cart = stickers.where((e) => e.cart).toList();
+    update();
   }
 
   Future<void> onCheckOutTap() async {
@@ -54,6 +58,7 @@ class StickerState extends GetxController {
       e.quantity = 1;
     }
     cart = stickers.where((e) => e.cart).toList();
+    update();
   }
 
   Future<void> onAddRemoveFavoriteTap(Sticker sticker) async {

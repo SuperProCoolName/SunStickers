@@ -1,23 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 
 import '../../data/_data.dart';
+import '../../states/_states.dart';
 import '../../ui_kit/_ui_kit.dart';
 import '../widgets/_widgets.dart';
 
-class StickerDetail extends StatelessWidget {
-  StickerDetail({super.key});
-  final sticker = AppData.stickers[0];
+class StickerDetail extends GetView<StickerState> {
+  const StickerDetail({super.key, required this.sticker});
+
+  final Sticker sticker;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: _appBar(context),
-      body: Center(child: Image.asset(sticker.image, scale: 2)),
-      floatingActionButton: _floatingActionButton(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-      bottomNavigationBar: _bottomAppBar(context),
+    return GetBuilder<StickerState>(
+      builder: (_) => Scaffold(
+        appBar: _appBar(context),
+        body: Center(child: Image.asset(sticker.image, scale: 2)),
+        floatingActionButton: _floatingActionButton(),
+        floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+        bottomNavigationBar: _bottomAppBar(context),
+      ),
     );
   }
 
@@ -101,8 +106,8 @@ class StickerDetail extends StatelessWidget {
                                 style: Theme.of(context).textTheme.displayLarge?.copyWith(color: AppColor.accent),
                               ),
                               CounterButton(
-                                onIncrementTap: () {},
-                                onDecrementTap: () {},
+                                onIncrementTap: () => controller.onIncreaseQuantityTap(sticker),
+                                onDecrementTap: () => controller.onDecreaseQuantityTap(sticker),
                                 label: Text(
                                   sticker.quantity.toString(),
                                   style: Theme.of(context).textTheme.displayLarge,
@@ -127,7 +132,7 @@ class StickerDetail extends StatelessWidget {
                             child: Padding(
                               padding: const EdgeInsets.symmetric(horizontal: 30),
                               child: ElevatedButton(
-                                onPressed: () {},
+                                onPressed: () => controller.onAddToCartTap(sticker),
                                 child: const Text("Add to cart"),
                               ),
                             ),
