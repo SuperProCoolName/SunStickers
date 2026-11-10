@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 
+import 'states/_states.dart';
 import 'ui/_ui.dart';
 import 'ui_kit/_ui_kit.dart';
 
@@ -13,10 +15,12 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Sunny Stickers',
-      theme: AppTheme.darkTheme,
-      home: const HomeScreen(),
+    return Observer(
+      builder: (_) => MaterialApp(
+        title: 'Sunny Stickers',
+        theme: StickerState().light ? AppTheme.lightTheme : AppTheme.darkTheme,
+        home: const HomeScreen(),
+      ),
     );
   }
 }

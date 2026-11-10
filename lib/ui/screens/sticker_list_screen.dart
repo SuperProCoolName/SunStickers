@@ -71,7 +71,7 @@ class StickerList extends StatelessWidget {
     return AppBar(
       leading: IconButton(
         icon: const FaIcon(FontAwesomeIcons.dice),
-        onPressed: () {},
+        onPressed: state.toggleTheme,
       ),
       title: Row(
         mainAxisAlignment: MainAxisAlignment.center,
