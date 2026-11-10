@@ -1,25 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 
 import '../../data/_data.dart';
+import '../../states/_states.dart';
 import '../../ui_kit/_ui_kit.dart';
 import '../_ui.dart';
 
 class CartScreen extends StatelessWidget {
-  CartScreen({super.key});
-  var cartItems = AppData.cartItems;
-  double taxes = 5.0;
+  const CartScreen({super.key});
+
+  StickerState get state => StickerState();
+  List<Sticker> get cartItems => state.cart;
+  final double taxes = 5.0;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: _appBar(context),
-      body: EmptyWrapper(
-        title: "Empty cart",
-        isEmpty: cartItems.isEmpty,
-        child: _cartListView(context),
+    return Observer(
+      builder: (_) => Scaffold(
+        appBar: _appBar(context),
+        body: EmptyWrapper(
+          title: "Empty cart",
+          isEmpty: cartItems.isEmpty,
+          child: _cartListView(context),
+        ),
+        bottomNavigationBar: cartItems.isEmpty? const SizedBox.shrink() : _bottomAppBar(context),
       ),
-      bottomNavigationBar: cartItems.isEmpty? const SizedBox.shrink() : _bottomAppBar(context),
     );
   }
 
@@ -38,80 +44,79 @@ class CartScreen extends StatelessWidget {
       itemCount: cartItems.length,
       itemBuilder: (_, index) {
         final sticker = cartItems[index];
-        return Dismissible(
-          direction: DismissDirection.endToStart,
-          onDismissed: (direction) {
-            if (direction == DismissDirection.endToStart) {
-              print('Удаляем');
-            }
-          },
-          key: UniqueKey(),
-          background: Row(
-            children: [
-              Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 15,
-                  vertical: 25,
-                ),
-                decoration: BoxDecoration(
-                  color: Colors.redAccent,
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                child: const FaIcon(FontAwesomeIcons.trash),
-              ),
-            ],
-          ),
-          child: Container(
-            width: double.infinity,
-            padding: const EdgeInsets.all(5),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15),
-              color: Theme.of(context).brightness == Brightness.dark ? AppColor.dark : Colors.white,
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        return Observer(
+          key: ValueKey(sticker.id),
+          builder: (_) => Dismissible(
+            direction: DismissDirection.endToStart,
+            onDismissed: (direction) {
+              if (direction == DismissDirection.endToStart) {
+                state.onRemoveFromCartTap(sticker);
+              }
+            },
+            key: ValueKey(sticker.id),
+            background: Row(
               children: [
-                const SizedBox(width: 20),
-                Image.asset(sticker.image, scale: 10),
-                const SizedBox(width: 20),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      sticker.name,
-                      style: Theme.of(context).textTheme.displayMedium,
-                    ),
-                    const SizedBox(height: 5),
-                    Text(
-                      "\$${sticker.price}",
-                      style: Theme.of(context).textTheme.headlineSmall,
-                    ),
-                  ],
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 15,
+                    vertical: 25,
+                  ),
+                  decoration: BoxDecoration(
+                    color: Colors.redAccent,
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: const FaIcon(FontAwesomeIcons.trash),
                 ),
-                const Spacer(),
-                Column(
-                  children: [
-                    CounterButton(
-                      onIncrementTap: () {
-                        print('Увеличить количество');
-                      },
-                      onDecrementTap: () {
-                        print('Уменьшить количество');
-                      },
-                      size: const Size(24, 24),
-                      padding: 0,
-                      label: Text(
-                        sticker.quantity.toString(),
+              ],
+            ),
+            child: Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(5),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
+                color: Theme.of(context).brightness == Brightness.dark ? AppColor.dark : Colors.white,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  const SizedBox(width: 20),
+                  Image.asset(sticker.image, scale: 10),
+                  const SizedBox(width: 20),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        sticker.name,
                         style: Theme.of(context).textTheme.displayMedium,
                       ),
-                    ),
-                    Text(
-                      "\$10",
-                      style: AppTextStyle.h2Style.copyWith(color: AppColor.accent),
-                    )
-                  ],
-                )
-              ],
+                      const SizedBox(height: 5),
+                      Text(
+                        "\$${sticker.price}",
+                        style: Theme.of(context).textTheme.headlineSmall,
+                      ),
+                    ],
+                  ),
+                  const Spacer(),
+                  Column(
+                    children: [
+                      CounterButton(
+                        onIncrementTap: () => state.onIncreaseQuantityTap(sticker),
+                        onDecrementTap: () => state.onDecreaseQuantityTap(sticker),
+                        size: const Size(24, 24),
+                        padding: 0,
+                        label: Text(
+                          sticker.quantity.toString(),
+                          style: Theme.of(context).textTheme.displayMedium,
+                        ),
+                      ),
+                      Text(
+                        "\$${state.stickerPrice(sticker)}",
+                        style: AppTextStyle.h2Style.copyWith(color: AppColor.accent),
+                      )
+                    ],
+                  )
+                ],
+              ),
             ),
           ),
         );
@@ -148,7 +153,7 @@ class CartScreen extends StatelessWidget {
                                 style: Theme.of(context).textTheme.headlineSmall,
                               ),
                               Text(
-                                "\$111",
+                                "\$${state.subtotal}",
                                 style: Theme.of(context).textTheme.displayMedium,
                               ),
                             ],
@@ -185,7 +190,7 @@ class CartScreen extends StatelessWidget {
                                 style: Theme.of(context).textTheme.displayMedium,
                               ),
                               Text(
-                                "\$120.0",
+                                "\$${state.subtotal + taxes}",
                                 style: AppTextStyle.h2Style.copyWith(
                                   color: AppColor.accent,
                                 ),
@@ -200,7 +205,7 @@ class CartScreen extends StatelessWidget {
                           child: Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 30),
                             child: ElevatedButton(
-                              onPressed: () {},
+                              onPressed: state.onCheckOutTap,
                               child: const Text("Checkout"),
                             ),
                           ),
