@@ -1,22 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../data/_data.dart';
+import '../../states/_states.dart';
 import '../../ui_kit/_ui_kit.dart';
 import '../_ui.dart';
 
-class FavoriteScreen extends StatelessWidget {
-  FavoriteScreen({super.key});
-  var favoriteItems = AppData.favoriteItems;
+class FavoriteScreen extends GetView<StickerState> {
+  const FavoriteScreen({super.key});
+
+  List<Sticker> get favoriteItems => controller.favorite;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: _appBar(context),
-      body: EmptyWrapper(
-        type: EmptyWrapperType.favorite,
-        title: "Empty favorite",
-        isEmpty: favoriteItems.isEmpty,
-        child: _favoriteListView(context),
+    return GetBuilder<StickerState>(
+      builder: (_) => Scaffold(
+        appBar: _appBar(context),
+        body: EmptyWrapper(
+          type: EmptyWrapperType.favorite,
+          title: "Empty favorite",
+          isEmpty: favoriteItems.isEmpty,
+          child: _favoriteListView(context),
+        ),
       ),
     );
   }

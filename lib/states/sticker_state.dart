@@ -64,6 +64,7 @@ class StickerState extends GetxController {
   Future<void> onAddRemoveFavoriteTap(Sticker sticker) async {
     sticker.favorite = !sticker.favorite;
     favorite = stickers.where((e) => e.favorite).toList();
+    update();
   }
 
   void toggleTheme() {
