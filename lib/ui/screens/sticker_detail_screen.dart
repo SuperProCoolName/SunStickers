@@ -45,7 +45,7 @@ class StickerDetail extends StatelessWidget {
     return FloatingActionButton(
       elevation: 0.0,
       backgroundColor: AppColor.accent,
-      onPressed: () {},
+      onPressed: () => state.onAddRemoveFavoriteTap(sticker),
       child: sticker.favorite ? const Icon(AppIcon.heart) : const Icon(AppIcon.outlinedHeart),
     );
   }
