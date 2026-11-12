@@ -68,4 +68,14 @@ class StickerNotifier extends Notifier<StickerState> {
     }).toList();
     state = state.copyWith(stickers: stickers);
   }
+
+  void onAddRemoveFavoriteTap(int stickerId) {
+    final stickers = state.stickers.map((e) {
+      if (e.id == stickerId) {
+        return e.copyWith(favorite: !e.favorite);
+      }
+      return e;
+    }).toList();
+    state = state.copyWith(stickers: stickers);
+  }
 }

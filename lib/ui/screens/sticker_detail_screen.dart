@@ -44,7 +44,7 @@ class StickerDetail extends ConsumerWidget {
     return FloatingActionButton(
       elevation: 0.0,
       backgroundColor: AppColor.accent,
-      onPressed: () {},
+      onPressed: () => ref.read(stickerProvider.notifier).onAddRemoveFavoriteTap(stickerId),
       child: sticker.favorite ? const Icon(AppIcon.heart) : const Icon(AppIcon.outlinedHeart),
     );
   }
