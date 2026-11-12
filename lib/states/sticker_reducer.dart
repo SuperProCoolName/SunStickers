@@ -60,5 +60,15 @@ StickerState stickerReducer(StickerState state, dynamic action) {
     return state.copyWith(stickers: stickers);
   }
 
+  if (action is FavoriteToggled) {
+    final stickers = state.stickers.map((e) {
+      if (e.id == action.stickerId) {
+        return e.copyWith(favorite: !e.favorite);
+      }
+      return e;
+    }).toList();
+    return state.copyWith(stickers: stickers);
+  }
+
   return state;
 }

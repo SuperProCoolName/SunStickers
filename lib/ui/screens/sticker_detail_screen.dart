@@ -48,7 +48,7 @@ class StickerDetail extends StatelessWidget {
     return FloatingActionButton(
       elevation: 0.0,
       backgroundColor: AppColor.accent,
-      onPressed: () {},
+      onPressed: () => StoreProvider.of<StickerState>(context, listen: false).dispatch(FavoriteToggled(stickerId)),
       child: sticker.favorite ? const Icon(AppIcon.heart) : const Icon(AppIcon.outlinedHeart),
     );
   }
