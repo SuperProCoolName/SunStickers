@@ -23,10 +23,13 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Sunny Stickers',
-      theme: AppTheme.darkTheme,
-      home: const HomeScreen(),
+    return StoreConnector<StickerState, StickerState>(
+      converter: (store) => store.state,
+      builder: (context, state) => MaterialApp(
+        title: 'Sunny Stickers',
+        theme: state.light ? AppTheme.lightTheme : AppTheme.darkTheme,
+        home: const HomeScreen(),
+      ),
     );
   }
 }

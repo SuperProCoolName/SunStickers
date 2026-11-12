@@ -39,3 +39,5 @@ class FavoriteToggled extends StickerAction {
 
   final int stickerId;
 }
+
+class ThemeToggled extends StickerAction {}

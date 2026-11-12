@@ -70,5 +70,9 @@ StickerState stickerReducer(StickerState state, dynamic action) {
     return state.copyWith(stickers: stickers);
   }
 
+  if (action is ThemeToggled) {
+    return state.copyWith(light: !state.light);
+  }
+
   return state;
 }
