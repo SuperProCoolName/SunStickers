@@ -1,10 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:redux/redux.dart';
 
+import 'states/_states.dart';
 import 'ui/_ui.dart';
 import 'ui_kit/_ui_kit.dart';
 
 void main() {
-  runApp(const MyApp());
+  final store = Store<StickerState>(
+    stickerReducer,
+    initialState: StickerState.initial(),
+  );
+  runApp(StoreProvider<StickerState>(
+    store: store,
+    child: const MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
