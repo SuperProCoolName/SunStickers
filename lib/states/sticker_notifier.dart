@@ -78,4 +78,8 @@ class StickerNotifier extends Notifier<StickerState> {
     }).toList();
     state = state.copyWith(stickers: stickers);
   }
+
+  void toggleTheme() {
+    state = state.copyWith(light: !state.light);
+  }
 }

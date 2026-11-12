@@ -70,7 +70,7 @@ class StickerList extends ConsumerWidget {
     return AppBar(
       leading: IconButton(
         icon: const FaIcon(FontAwesomeIcons.dice),
-        onPressed: () {},
+        onPressed: () => ref.read(stickerProvider.notifier).toggleTheme(),
       ),
       title: Row(
         mainAxisAlignment: MainAxisAlignment.center,
