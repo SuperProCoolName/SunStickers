@@ -1,25 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 
-import '../../data/_data.dart';
+import '../../states/_states.dart';
 import '../../ui_kit/_ui_kit.dart';
 import '../_ui.dart';
 
 class CartScreen extends StatelessWidget {
-  CartScreen({super.key});
-  var cartItems = AppData.cartItems;
-  double taxes = 5.0;
+  const CartScreen({super.key});
+
+
+  final double taxes = 5.0;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: _appBar(context),
-      body: EmptyWrapper(
-        title: "Empty cart",
-        isEmpty: cartItems.isEmpty,
-        child: _cartListView(context),
+    return StoreConnector<StickerState, StickerState>(
+      converter: (store) => store.state,
+      builder: (context, state) => Scaffold(
+        appBar: _appBar(context),
+        body: EmptyWrapper(
+          title: "Empty cart",
+          isEmpty: state.cart.isEmpty,
+          child: _cartListView(context, state),
+        ),
+        bottomNavigationBar: state.cart.isEmpty? const SizedBox.shrink() : _bottomAppBar(context, state),
       ),
-      bottomNavigationBar: cartItems.isEmpty? const SizedBox.shrink() : _bottomAppBar(context),
     );
   }
 
@@ -32,7 +37,8 @@ class CartScreen extends StatelessWidget {
     );
   }
 
-  Widget _cartListView(BuildContext context) {
+  Widget _cartListView(BuildContext context, StickerState state) {
+    final cartItems = state.cart;
     return ListView.separated(
       padding: const EdgeInsets.all(30),
       itemCount: cartItems.length,
@@ -42,10 +48,10 @@ class CartScreen extends StatelessWidget {
           direction: DismissDirection.endToStart,
           onDismissed: (direction) {
             if (direction == DismissDirection.endToStart) {
-              print('Удаляем');
+              StoreProvider.of<StickerState>(context, listen: false).dispatch(CartItemRemoved(sticker.id));
             }
           },
-          key: UniqueKey(),
+          key: ValueKey(sticker.id),
           background: Row(
             children: [
               Container(
@@ -92,12 +98,8 @@ class CartScreen extends StatelessWidget {
                 Column(
                   children: [
                     CounterButton(
-                      onIncrementTap: () {
-                        print('Увеличить количество');
-                      },
-                      onDecrementTap: () {
-                        print('Уменьшить количество');
-                      },
+                      onIncrementTap: () => StoreProvider.of<StickerState>(context, listen: false).dispatch(QuantityIncreased(sticker.id)),
+                      onDecrementTap: () => StoreProvider.of<StickerState>(context, listen: false).dispatch(QuantityDecreased(sticker.id)),
                       size: const Size(24, 24),
                       padding: 0,
                       label: Text(
@@ -106,7 +108,7 @@ class CartScreen extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      "\$10",
+                      "\$${state.stickerPrice(sticker)}",
                       style: AppTextStyle.h2Style.copyWith(color: AppColor.accent),
                     )
                   ],
@@ -122,7 +124,7 @@ class CartScreen extends StatelessWidget {
     );
   }
 
-  Widget _bottomAppBar(BuildContext context) {
+  Widget _bottomAppBar(BuildContext context, StickerState state) {
     return ClipRRect(
       borderRadius: const BorderRadius.only(
         topLeft: Radius.circular(30),
@@ -148,7 +150,7 @@ class CartScreen extends StatelessWidget {
                                 style: Theme.of(context).textTheme.headlineSmall,
                               ),
                               Text(
-                                "\$111",
+                                "\$${state.subtotal}",
                                 style: Theme.of(context).textTheme.displayMedium,
                               ),
                             ],
@@ -185,7 +187,7 @@ class CartScreen extends StatelessWidget {
                                 style: Theme.of(context).textTheme.displayMedium,
                               ),
                               Text(
-                                "\$120.0",
+                                "\$${state.subtotal + taxes}",
                                 style: AppTextStyle.h2Style.copyWith(
                                   color: AppColor.accent,
                                 ),
@@ -200,7 +202,7 @@ class CartScreen extends StatelessWidget {
                           child: Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 30),
                             child: ElevatedButton(
-                              onPressed: () {},
+                              onPressed: () => StoreProvider.of<StickerState>(context, listen: false).dispatch(CartCheckedOut()),
                               child: const Text("Checkout"),
                             ),
                           ),
